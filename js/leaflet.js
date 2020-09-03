@@ -2,10 +2,35 @@ var latit;
 var longit;
 
 if (navigator.geolocation) {
-     navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
       var latit = position.coords.latitude;
       var longit = position.coords.longitude;
       var marker = L.marker([latit, longit], {icon: myIcon}).addTo(mymap);
+      var latLong = latit + ',' + longit;
+    $.ajax({
+        url: "../gazetteer/php/geolocate.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            q: latLong,
+            lang: 'en'
+        },
+        success: function(result) {
+
+            console.log(result);
+
+            if (result.status.name == "ok") {
+
+                $('#text1').html(result['results'][0]['formatted']);
+
+
+            }
+        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+        }
+    }); 
    } 
    )} else {
        $(".info").html("This browser doesn't support geolocation.")
