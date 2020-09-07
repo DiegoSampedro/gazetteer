@@ -39,6 +39,6 @@ input:focus {
     box-shadow: 0px -1px 10px #cecccc;
 }
 
-#text1 {
+#text1, #text2, #text3, #text4 {
     color: white;
 }

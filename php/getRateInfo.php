@@ -1,6 +1,6 @@
 <?php
 
-    $url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $_REQUEST['country'] . '&username=DiegoSampedro&style=full';
+    $url='https://openexchangerates.org/api/latest.json?app_id=2ebca78af62d417688a07bcc8e5c9962';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -15,7 +15,7 @@
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
-	$output['data'] = $decode['geonames'];
+	$output['rateData'] = $decode;
 	
 	header('Content-Type: application/json; charset=UTF-8');
 

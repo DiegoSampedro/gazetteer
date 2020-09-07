@@ -1,6 +1,6 @@
 <?php
 
-    $url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $_REQUEST['country'] . '&username=DiegoSampedro&style=full';
+    $url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $_REQUEST['lat'] . '&lon=' . $_REQUEST['lon'] . '&exclude=hourly,minutely&appid=23c61634b6fd3e68fc3c5cbde0ff8c7c';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -15,7 +15,7 @@
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
-	$output['data'] = $decode['geonames'];
+	$output['weatherData'] = $decode;
 	
 	header('Content-Type: application/json; charset=UTF-8');
 

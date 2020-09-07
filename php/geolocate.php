@@ -58,6 +58,12 @@
 			$temp['geometry']['lng'] = $entry['geometry']['lng'];
 			$temp['countryCode'] = strtoupper($entry['components']['country_code']);
 			$temp['timezone'] = $entry['annotations']['timezone']['name'];
+			$temp['currency'] = $entry['annotations']['currency']['name'];
+			$temp['flag'] = $entry['annotations']['flag'];
+			//$temp['city'] = $entry['components']['city'];
+			$temp['country'] = $entry['components']['country'];
+			$temp['continent'] = $entry['components']['continent'];
+			$temp['road'] = $entry['components']['road'];
 
 			array_push($searchResult['results'], $temp);
 
