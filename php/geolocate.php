@@ -52,7 +52,6 @@
 
 		foreach ($result['results'] as $entry) {
 
-			$temp['source'] = 'opencage';
 			$temp['formatted'] = $entry['formatted'];
 			$temp['geometry']['lat'] = $entry['geometry']['lat'];
 			$temp['geometry']['lng'] = $entry['geometry']['lng'];
@@ -71,6 +70,58 @@
 
 	}
 
+	header('Content-Type: application/json; charset=UTF-8');
+
+	$url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $searchResult['results'][0]['countryCode'] . '&username=DiegoSampedro&style=full';
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result1=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode1 = json_decode($result1,true);	
+
+	$searchResult['geonames'] = $decode1['geonames'];
+	
+	header('Content-Type: application/json; charset=UTF-8');
+
+
+	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $searchResult['results'][0]['geometry']['lat'] . '&lon=' . $searchResult['results'][0]['geometry']['lng'] . '&exclude=hourly,minutely&appid=23c61634b6fd3e68fc3c5cbde0ff8c7c';
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result2=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode2 = json_decode($result2,true);	
+
+	$searchResult['weatherData'] = $decode2;
+	
+	header('Content-Type: application/json; charset=UTF-8');
+
+	$url='https://openexchangerates.org/api/latest.json?app_id=2ebca78af62d417688a07bcc8e5c9962';
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result3=curl_exec($ch);
+
+	curl_close($ch);
+
+	$decode3 = json_decode($result3,true);	
+
+	$searchResult['rateData'] = $decode3;
+	
 	header('Content-Type: application/json; charset=UTF-8');
 	
 	echo json_encode($searchResult, JSON_UNESCAPED_UNICODE);

@@ -48,67 +48,8 @@ if (navigator.geolocation) {
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
         }
-    }),
-        geonameRequest = geolocateRequest.then(function(data){
-            return $.ajax({
-                url: "../gazetteer/php/getCountryInfo.php",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    country: data['results'][0]['countryCode'],
-                },
-                success: function(result) {
-        
-                    console.log(result);
-
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                }
-            })
-        }),
-        openWeatherRequest = $.ajax({
-            url: "../gazetteer/php/getWeatherInfo.php",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                lat: latit,
-                lon: longit
-            },
-            success: function(result) {
-    
-                console.log(result);
-    
-                if (result.status.name == "ok") {
-                  
-                }
-            
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        }),
-        rateRequest = $.ajax({
-            url: "../gazetteer/php/getRateInfo.php",
-            type: 'POST',
-            dataType: 'json',
-            success: function(result) {
-    
-                console.log(result);
-    
-                if (result.status.name == "ok") {
-
-                }
-            
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        })
-        
- 
-
-   } 
+    })
+   }  
    )} else {
        $(".info").html("This browser doesn't support geolocation.")
    }
