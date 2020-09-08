@@ -6,9 +6,28 @@
 	include('openCage/AbstractGeocoder.php');
 	include('openCage/Geocoder.php');
 
+	$url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $_REQUEST['countryCode'] . '&username=DiegoSampedro&style=full';
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL,$url);
+
+	$result1=curl_exec($ch);
+
+	curl_close($ch);
+
+	$searchResult = [];
+
+	$searchResult = json_decode($result1,true);
+	
+	header('Content-Type: application/json; charset=UTF-8');
+
+	$capital = $searchResult['geonames'][0]['capital'] . ',' . $searchResult['geonames'][0]['countryName'];
+
 	$geocoder = new \OpenCage\Geocoder\Geocoder('706eeb14f80c490cbba4ee3a3ced2ef8');
 
-	$result = $geocoder->geocode($_REQUEST['q'],['language'=>$_REQUEST['lang']]);
+	$result = $geocoder->geocode($capital, ['language'=>$_REQUEST['lang']]);
 
 	if (in_array($result['status']['code'], [401,402,403,429])) {
 
@@ -43,7 +62,6 @@
 
 	} else {
 
-		$searchResult = [];
         $searchResult['results'] = [];
         $searchResult['status']['code'] = "200";
 	    $searchResult['status']['name'] = "ok";
@@ -52,17 +70,14 @@
 
 		foreach ($result['results'] as $entry) {
 
-			$temp['formatted'] = $entry['formatted'];
-			$temp['geometry']['lat'] = $entry['geometry']['lat'];
-			$temp['geometry']['lng'] = $entry['geometry']['lng'];
-			$temp['countryCode'] = strtoupper($entry['components']['country_code']);
-			$temp['timezone'] = $entry['annotations']['timezone']['name'];
-			$temp['currency'] = $entry['annotations']['currency']['name'];
-			$temp['flag'] = $entry['annotations']['flag'];
-			//$temp['city'] = $entry['components']['city'];
-			$temp['country'] = $entry['components']['country'];
-			$temp['continent'] = $entry['components']['continent'];
-			$temp['road'] = $entry['components']['road'];
+			$temp['geometry']['lat'] = $entry['geometry']['lat'] ?: 'N/A';
+			$temp['geometry']['lng'] = $entry['geometry']['lng'] ?: 'N/A';
+			$temp['countryCode'] = strtoupper($entry['components']['country_code']) ?: 'N/A';
+			$temp['timezone'] = $entry['annotations']['timezone']['name'] ?: 'N/A';
+			$temp['currency'] = ($entry['annotations']['currency']['name']) ?: 'N/A';
+			$temp['flag'] = $entry['annotations']['flag'] ?: 'N/A';
+			$temp['country'] = $entry['components']['country'] ?: 'N/A';
+			$temp['continent'] = $entry['components']['continent'] ?: 'N/A';
 
 			array_push($searchResult['results'], $temp);
 
@@ -70,23 +85,6 @@
 
 	}
 
-	header('Content-Type: application/json; charset=UTF-8');
-
-	$url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $searchResult['results'][0]['countryCode'] . '&username=DiegoSampedro&style=full';
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL,$url);
-
-	$result1=curl_exec($ch);
-
-	curl_close($ch);
-
-	$decode1 = json_decode($result1,true);	
-
-	$searchResult['geonames'] = $decode1['geonames'];
-	
 	header('Content-Type: application/json; charset=UTF-8');
 
 
@@ -123,7 +121,7 @@
 	$searchResult['rateData'] = $decode3;
 	
 	header('Content-Type: application/json; charset=UTF-8');
-	
+		
 	echo json_encode($searchResult, JSON_UNESCAPED_UNICODE);
 
 	// functions

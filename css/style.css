@@ -9,36 +9,51 @@
 }
 
 img {
-    margin: 20px auto;
+    margin: 30px auto 10px auto;
 }
 
-.searchBar {
-    margin: 20px auto 40px auto;
+select:focus {
+    outline: none;
+}
+
+select:invalid{
+    color: gray;
+}
+
+select {
+    margin: 15px auto 40px auto !important;
     padding: 3px;
     border: 1px solid rgb(41, 3, 41);
     border-radius: 15px;
 }
 
-input {
-    text-align: center;
-    width: 100%;
-}
-
-input:focus {
-    outline: none;
-}
-
 .info {
-    background-color: rgb(41, 3, 41);
-    height: 74vh;
+    background-color: rgb(29, 1, 29);
+    height: 75vh;
     box-shadow: 0px -1px 10px #cecccc;
+    padding: 0 !important;
+    border-radius: 5px 0 0 0;
 }
 
 #mapid {
-    height: 74vh;
+    height: 75vh;
     box-shadow: 0px -1px 10px #cecccc;
 }
 
 #text1, #text2, #text3, #text4 {
     color: white;
+}
+
+.nav-item {
+    width: 50%;
+    text-align: center;
+    align-content: center;
+}
+
+a {
+    color: grey !important;
+}
+
+.tab-content {
+    padding: 15px;
 }

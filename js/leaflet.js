@@ -26,7 +26,7 @@ if (navigator.geolocation) {
           }).addTo(mymap);
 
     var geolocateRequest = $.ajax({
-        url: "../gazetteer/php/geolocate.php",
+        url: "../gazetteer/php/getCurrentInfo.php",
         type: 'POST',
         dataType: 'json',
         data: {
@@ -53,6 +53,30 @@ if (navigator.geolocation) {
    )} else {
        $(".info").html("This browser doesn't support geolocation.")
    }
+
+
+       $('#country').on('change', function() {
+        var geolocateRequest2 = $.ajax({
+            url: "../gazetteer/php/getCountryInfo.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                countryCode: $('#country').val(),
+                lang: 'en'
+            },
+            success: function(result) {
+    
+                console.log(result);
+    
+                if (result.status.name == "ok") {
+                }
+            
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        })
+       })
 
 
 
