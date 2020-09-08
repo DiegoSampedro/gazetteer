@@ -54,6 +54,44 @@ a {
     color: grey !important;
 }
 
+h5 {
+    color: white !important;
+    text-align: center;
+    border-bottom: 1px solid darkgray;
+    padding: 8px;
+}
+
+.info-img {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#todayW, #tomorrowW {
+    margin: 2px auto;
+    height: 90px;
+    width: 90px;
+}
+
+.info-block {
+    margin: 4px auto;
+    max-width: 50px;
+}
+
+p {
+    color: white !important;
+    text-align: center;
+    margin: 2px;
+}
+
+#todayMinTemp, #todayMaxTemp, #todayHum, #todayWind, #tomorrowHum, #tomorrowWind, #tomorrowMaxTemp, #tomorrowMinTemp {
+    margin: auto;
+    padding: 4px;
+}
+
 .tab-content {
     padding: 15px;
 }
+
+/*.full-height {
+    overflow: scroll;
+}*/

@@ -88,7 +88,7 @@
 	header('Content-Type: application/json; charset=UTF-8');
 
 
-	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $searchResult['results'][0]['geometry']['lat'] . '&lon=' . $searchResult['results'][0]['geometry']['lng'] . '&exclude=hourly,minutely&appid=23c61634b6fd3e68fc3c5cbde0ff8c7c';
+	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $searchResult['results'][0]['geometry']['lat'] . '&lon=' . $searchResult['results'][0]['geometry']['lng'] . '&units=metric&exclude=hourly,minutely&appid=23c61634b6fd3e68fc3c5cbde0ff8c7c';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

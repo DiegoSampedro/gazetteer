@@ -22,7 +22,7 @@
                 <img src="./images/logo.jpg">
         </div>
         <div class="row">
-            <select id="country" class="col-4" name="country" required>
+            <select id="country" class="col-6" name="country" required>
                 <option value="" disabled selected hidden>Select a country</option>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
@@ -292,13 +292,111 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="info">
-                        <p id="text1"></p>
-                        <p id="text2"></p>
-                        <p id="text3"></p>
-                        <p id="text4"></p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col info-block">
+                                    <h5>Country</h5>
+                                    <p id="country2"></p>
+                                </div>
+                                <div class="col info-block">
+                                    <h5>Continent</h5>
+                                    <p id="continent"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col info-block">
+                                    <h5>Capital</h5>
+                                    <p id="capital"></p>
+                                </div>
+                                <div class="col info-block">
+                                    <h5>Population</h5>
+                                    <p id="population"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col info-block">
+                                    <h5>Currency</h5>
+                                    <p id="currency"></p>
+                                </div>
+                                <div class="col info-block">
+                                    <h5>Currency Code</h5>
+                                    <p id="currencyCode"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col info-block">
+                                    <h5>Exchange Rate</h5>
+                                    <p id="exchange"></p>
+                                </div>
+                                <div class="col info-block">
+                                    <h5>Area (km2)</h5>
+                                    <p id="area"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="weather">
-                        <p>Hi</p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5>Today</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col info-img">
+                                            <img id="todayW">
+                                            <p id="todayDescription"></p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row-centered my-auto">
+                                                <p id="todayMinTemp"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="todayMaxTemp"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="todayWind"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="todayHum"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5>Tomorrow</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col info-img">
+                                            <img id="tomorrowW">
+                                            <p id="tomorrowDescription"></p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row-centered my-auto">
+                                                <p id="tomorrowMinTemp"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="tomorrowMaxTemp"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="tomorrowWind"></p>
+                                            </div>
+                                            <div class="row-centered my-auto">
+                                                <p id="tomorrowHum"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
 

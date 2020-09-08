@@ -38,10 +38,26 @@ if (navigator.geolocation) {
             console.log(result);
 
             if (result.status.name == "ok") {
-                $('#text1').html(result['results'][0]['formatted']);
-                $('#text2').html(result['results'][0]['timezone']);
-                $('#text3').html(result['results'][0]['currency']);
-                $('#text4').html(result['results'][0]['flag']);
+                $('#country2').html(result['results'][0]['country']);
+                $('#continent').html(result['geonames'][0]['continentName']);
+                $('#capital').html(result['geonames'][0]['capital']);
+                $('#population').html(result['geonames'][0]['population']);
+                $('#currency').html(result['results'][0]['currency']);
+                $('#currencyCode').html(result['geonames'][0]['currencyCode']);
+                $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1$');
+                $('#area').html(result['geonames'][0]['areaInSqKm']);
+                $('#todayW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['current']['weather'][0]['icon'] + '@2x.png');
+                $('#todayDescription').html(result['weatherData']['current']['weather'][0]['description']).css('textTransform', 'capitalize');;
+                $('#todayMaxTemp').html('Max Temperature: ' + result['weatherData']['daily'][0]['temp']['max'] + 'C');
+                $('#todayMinTemp').html('Min Temperature: ' + result['weatherData']['daily'][0]['temp']['min'] + 'C');
+                $('#todayWind').html('Wind Speed: ' + result['weatherData']['current']['wind_speed'] + 'm/s');
+                $('#todayHum').html('Humidity: ' + result['weatherData']['current']['humidity'] + '%');
+                $('#tomorrowW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['daily'][1]['weather'][0]['icon'] + '@2x.png');
+                $('#tomorrowDescription').html(result['weatherData']['daily'][1]['weather'][0]['description']).css('textTransform', 'capitalize');;
+                $('#tomorrowMaxTemp').html('Max Temperature: ' + result['weatherData']['daily'][1]['temp']['max'] + 'C');
+                $('#tomorrowMinTemp').html('Min Temperature: ' + result['weatherData']['daily'][1]['temp']['min'] + 'C');
+                $('#tomorrowWind').html('Wind Speed: ' + result['weatherData']['daily'][1]['wind_speed'] + 'm/s');
+                $('#tomorrowHum').html('Humidity: ' + result['weatherData']['daily'][1]['humidity'] + '%');
             }
         
         },
@@ -69,6 +85,26 @@ if (navigator.geolocation) {
                 console.log(result);
     
                 if (result.status.name == "ok") {
+                    $('#country2').html(result['results'][0]['country']);
+                    $('#continent').html(result['geonames'][0]['continentName']);
+                    $('#capital').html(result['geonames'][0]['capital']);
+                    $('#population').html(result['geonames'][0]['population']);
+                    $('#currency').html(result['results'][0]['currency']);
+                    $('#currencyCode').html(result['geonames'][0]['currencyCode']);
+                    $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1$');
+                    $('#area').html(result['geonames'][0]['areaInSqKm']);
+                    $('#todayW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['current']['weather'][0]['icon'] + '@2x.png');
+                    $('#todayDescription').html(result['weatherData']['current']['weather'][0]['description']).css('textTransform', 'capitalize');;
+                    $('#todayMaxTemp').html('Max Temperature: ' + result['weatherData']['daily'][0]['temp']['max'] + 'C');
+                    $('#todayMinTemp').html('Min Temperature: ' + result['weatherData']['daily'][0]['temp']['min'] + 'C');
+                    $('#todayWind').html('Wind Speed: ' + result['weatherData']['current']['wind_speed'] + 'm/s');
+                    $('#todayHum').html('Humidity: ' + result['weatherData']['current']['humidity'] + '%');
+                    $('#tomorrowW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['daily'][1]['weather'][0]['icon'] + '@2x.png');
+                    $('#tomorrowDescription').html(result['weatherData']['daily'][1]['weather'][0]['description']).css('textTransform', 'capitalize');;
+                    $('#tomorrowMaxTemp').html('Max Temperature: ' + result['weatherData']['daily'][1]['temp']['max'] + 'C');
+                    $('#tomorrowMinTemp').html('Min Temperature: ' + result['weatherData']['daily'][1]['temp']['min'] + 'C');
+                    $('#tomorrowWind').html('Wind Speed: ' + result['weatherData']['daily'][1]['wind_speed'] + 'm/s');
+                    $('#tomorrowHum').html('Humidity: ' + result['weatherData']['daily'][1]['humidity'] + '%');
                 }
             
             },
