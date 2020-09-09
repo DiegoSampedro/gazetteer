@@ -8,8 +8,12 @@
     font-family: 'Roboto', sans-serif;
 }
 
-img {
+#logo {
     margin: 30px auto 10px auto;
+}
+
+.background {
+    background-image: url('../images/world1.jpg');
 }
 
 select:focus {
@@ -70,6 +74,12 @@ h5 {
     margin: 2px auto;
     height: 90px;
     width: 90px;
+}
+
+#flag {
+    margin: auto;
+    height: 35px;
+    width: 35px;
 }
 
 .info-block {

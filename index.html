@@ -17,9 +17,9 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container background">
         <div class="row logo">
-                <img src="./images/logo.jpg">
+                <img src="./images/logo.jpg" id="logo">
         </div>
         <div class="row">
             <select id="country" class="col-6" name="country" required>
@@ -32,7 +32,6 @@
                 <option value="AD">Andorra</option>
                 <option value="AO">Angola</option>
                 <option value="AI">Anguilla</option>
-                <option value="AQ">Antarctica</option>
                 <option value="AG">Antigua and Barbuda</option>
                 <option value="AR">Argentina</option>
                 <option value="AM">Armenia</option>
@@ -281,7 +280,7 @@
             <div class="col-sm-12 col-md-7" id="mapid">
 
             </div>
-            <div class="info col-sm-12 col-md-5">
+            <div class="info col-sm-12 col-md-5 overflow-auto">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a href="#info" class="nav-link active" data-toggle="tab">Country Information</a>
@@ -314,9 +313,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col info-block">
-                                    <h5>Currency</h5>
-                                    <p id="currency"></p>
+                                <div class="col info-img">
+                                    <h5>Flag</h5>
+                                    <img id="flag">
                                 </div>
                                 <div class="col info-block">
                                     <h5>Currency Code</h5>
