@@ -7,6 +7,7 @@ var popup;
 var popupLocation;
 var popupContent;
 var myIcon;
+  
 
 if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -91,10 +92,10 @@ if (navigator.geolocation) {
     })
    }  
    )} else {
-       $("#country2").html("This browser doesn't support geolocation.");
-       $("#continent").html("Please select a country on the dropdown menu.");
+       $("mapid").append("<p>This browser doesn't support geolocation.</p></br><p>Please select a country on the dropdown menu.</p>");
    }
 
+   // event listener for the drop-down menu
 
        $('#country').on('change', function() {
         var geolocateRequest2 = $.ajax({
@@ -116,26 +117,16 @@ if (navigator.geolocation) {
                         bounds = L.latLngBounds(corner1, corner2);
 
                     mymap.flyToBounds(bounds, {padding: [90, 90]});
-
                     var lat = result['results'][0]['geometry']['lat'];
                     var lng = result['results'][0]['geometry']['lng'];
-
                     var newLatLng = new L.LatLng(lat, lng);
-
                     marker.setLatLng(newLatLng);
-
                     popupContent= result['geonames'][0]['capital'] + ' is the capital';
-
                     popup = new L.Popup();
                     popup.setLatLng(newLatLng);
                     popup.setContent(popupContent);
-
                     marker.bindPopup(popup);
-
                     marker.openPopup();
-
-                    
-                   
 
                     $('#country2').html(result['results'][0]['country']);
                     $('#continent').html(result['geonames'][0]['continentName']);
@@ -166,5 +157,20 @@ if (navigator.geolocation) {
             }
         })
        })
+
+// event listeners for the sidebar
+
+$(".closebtn").click(function() {
+    document.getElementById("mySidebar").style.width = "0px";
+    setTimeout( function(){
+        document.getElementById("main").style.display = "inline-block";
+           },350);
+    
+});
+
+  $(".openbtn").click(function() {
+    document.getElementById("mySidebar").style.width = "450px";
+    document.getElementById("main").style.display = "none";
+});
 
 });

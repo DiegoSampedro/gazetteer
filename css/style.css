@@ -135,7 +135,7 @@ p {
 
 .sidebar {
     height: 100%; /* 100% Full-height */
-    width: 450px; /* 0 width - change this with JavaScript */
+    width: 0px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 10000; /* Stay on top */
     top: 0;
@@ -170,27 +170,57 @@ p {
   
   /* The button used to open the sidebar */
   .openbtn {
-    font-size: 20px;
     cursor: pointer;
-    background-color: #111;
-    color: white;
-    padding: 10px 15px;
+    background-color: transparent;
+    color: rgb(97, 97, 97);
     border: none;
+  }
+
+  .long {
+    font-size: 20px;
+    padding: 10px 15px;
+  }
+
+.short {
+    font-size: 18px;
+    display: none;
+    padding: 15px 0;
+    margin-left: 5px;
   }
   
   .openbtn:hover {
-    background-color: #444;
+    color: black;
   }
   
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   #main {
-    transition: margin-left .5s; /* If you want a transition effect */
-    padding: 20px;
+    position: fixed;
+    display: inline-block;
+    z-index: 10001;
+    top: 20px;
+    right: 35px;
+    transition: margin-right .5s; /* If you want a transition effect */
+    padding: 5px;
   }
   
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
+  @media screen and (max-width: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
+    .short {display: inline-block}
+    .long {display: none}
+  }
+
+  @media screen and (max-width: 800px) {
+    .short {display: inline-block}
+    .long {display: none}
+  }
+
+  @media screen and (max-width: 450px) {
+    .sidebar {width: 100%; font-size: 16px; overflow-y: scroll}
+    .sidebar .closebtn {font-size: 25px}
+    .sidebar a {font-size: 15px}
+    .nav-link {margin-top: 20px;}
+    h5 {font-size: 18px !important}
   }
 
