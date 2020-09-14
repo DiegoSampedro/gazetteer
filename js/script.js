@@ -7,6 +7,11 @@ var popup;
 var popupLocation;
 var popupContent;
 var myIcon;
+
+var open_weather_key = config.OPEN_WEATHER;
+var geocoder_key = config.GEOCODER;
+var open_exchange_key = config.OPEN_EXCHANGE;
+var username = config.USERNAME;
   
 
 if (navigator.geolocation) {
@@ -14,6 +19,15 @@ if (navigator.geolocation) {
       latit = position.coords.latitude;
       longit = position.coords.longitude;
       var latLong = latit + ',' + longit;
+      mymap = L.map('mapid').setView([51.505, -0.09], 2);
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 13,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: 'pk.eyJ1IjoiZGllZ29zYW1wZWRybyIsImEiOiJja2VsZHcyMXgwbG1oMnJud2R2bTg4b2MwIn0.D6B-FvY03F2vrMHY59DSEw'
+                    }).addTo(mymap);
 
     var geolocateRequest = $.ajax({
         url: "../gazetteer/php/getCurrentInfo.php",
@@ -21,7 +35,11 @@ if (navigator.geolocation) {
         dataType: 'json',
         data: {
             q: latLong,
-            lang: 'en'
+            lang: 'en',
+            open_weather_key: open_weather_key,
+            geocoder_key: geocoder_key,
+            open_exchange_key: open_exchange_key,
+            username: username
         },
         success: function(result) {
 
@@ -32,9 +50,7 @@ if (navigator.geolocation) {
                     corner2 = L.latLng(result['geonames'][0]['south'], result['geonames'][0]['east']),
                     bounds = L.latLngBounds(corner1, corner2);
 
-               // var latit = result['results'][0]['geometry']['lat'];
-               // var longit = result['results'][0]['geometry']['lng'];
-                mymap = L.map('mapid').fitBounds(bounds, {padding: [50, 50]});
+                mymap.flyToBounds(bounds, {padding: [50, 50]});
                 myIcon = L.icon({
                     iconUrl: './images/map-marker.png',
                     iconSize: [38, 42],
@@ -67,16 +83,6 @@ if (navigator.geolocation) {
                     style: myStyle
                 }).addTo(mymap);
 
-
-                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    maxZoom: 13,
-                    id: 'mapbox/streets-v11',
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    accessToken: 'pk.eyJ1IjoiZGllZ29zYW1wZWRybyIsImEiOiJja2VsZHcyMXgwbG1oMnJud2R2bTg4b2MwIn0.D6B-FvY03F2vrMHY59DSEw'
-                    }).addTo(mymap);
-
                 $('#country2').html(result['geonames'][0]['countryName']);
                 $('#continent').html(result['geonames'][0]['continentName']);
                 $('#capital').html(result['geonames'][0]['capital']);
@@ -84,7 +90,7 @@ if (navigator.geolocation) {
                 var lowerCode = (result['geonames'][0]['countryCode']).toLowerCase();
                 $('#flag').attr('src', 'https://www.countryflags.io/' + lowerCode + '/shiny/64.png');
                 $('#currencyCode').html(result['geonames'][0]['currencyCode']);
-                $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1$');
+                $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1USD');
                 $('#area').html(result['geonames'][0]['areaInSqKm']);
                 $('#todayW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['current']['weather'][0]['icon'] + '@2x.png');
                 $('#todayDescription').html(result['weatherData']['current']['weather'][0]['description']).css('textTransform', 'capitalize');;
@@ -119,13 +125,19 @@ if (navigator.geolocation) {
             dataType: 'json',
             data: {
                 countryCode: $('#country').val(),
-                lang: 'en'
+                lang: 'en',
+                open_weather_key: open_weather_key,
+                geocoder_key: geocoder_key,
+                open_exchange_key: open_exchange_key,
+                username: username
             },
             success: function(result) {
     
                 console.log(result);
     
                 if (result.status.name == "ok") {
+
+                    $(".leaflet-interactive").remove();
 
                     var corner1 = L.latLng(result['geonames'][0]['north'], result['geonames'][0]['west']),
                         corner2 = L.latLng(result['geonames'][0]['south'], result['geonames'][0]['east']),
@@ -135,13 +147,15 @@ if (navigator.geolocation) {
                     var lat = result['results'][0]['geometry']['lat'];
                     var lng = result['results'][0]['geometry']['lng'];
                     var newLatLng = new L.LatLng(lat, lng);
+                    marker = L.marker([lat, lng], {icon: myIcon}).addTo(mymap);
                     marker.setLatLng(newLatLng);
-                    popupContent= result['geonames'][0]['capital'] + ' is the capital';
+                    popupContent = result['geonames'][0]['capital'] + ' is the capital of ' + result['geonames'][0]['countryName'];
                     popup = new L.Popup();
                     popup.setLatLng(newLatLng);
                     popup.setContent(popupContent);
                     marker.bindPopup(popup);
                     marker.openPopup();
+                   
 
                     myLines = [{
                         "type": result['borders'][0]['geometry']['type'],
@@ -166,7 +180,7 @@ if (navigator.geolocation) {
                     var lowerCode = (result['geonames'][0]['countryCode']).toLowerCase();
                     $('#flag').attr('src', 'https://www.countryflags.io/' + lowerCode + '/shiny/64.png');
                     $('#currencyCode').html(result['geonames'][0]['currencyCode']);
-                    $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1$');
+                    $('#exchange').html(result['rateData']['rates'][result['geonames'][0]['currencyCode']] + ' ' + result['geonames'][0]['currencyCode'] + ' / 1USD');
                     $('#area').html(result['geonames'][0]['areaInSqKm']);
                     $('#todayW').attr('src', 'http://openweathermap.org/img/wn/' + result['weatherData']['current']['weather'][0]['icon'] + '@2x.png');
                     $('#todayDescription').html(result['weatherData']['current']['weather'][0]['description']).css('textTransform', 'capitalize');;

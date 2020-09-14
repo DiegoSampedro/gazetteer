@@ -2,13 +2,14 @@
 
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
+	ini_set('memory_limit', '-1');
 
 	include('openCage/AbstractGeocoder.php');
 	include('openCage/Geocoder.php');
 
 	// Getting info from openCage API
 
-	$geocoder = new \OpenCage\Geocoder\Geocoder('706eeb14f80c490cbba4ee3a3ced2ef8');
+	$geocoder = new \OpenCage\Geocoder\Geocoder($_REQUEST['geocoder_key']);
 
 	$result = $geocoder->geocode($_REQUEST['q'],['language'=>$_REQUEST['lang']]);
 
@@ -33,7 +34,7 @@
 
 	// Getting info from geonames API
 
-	$url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $searchResult['results'][0]['countryCode'] . '&username=DiegoSampedro&style=full';
+	$url='http://api.geonames.org/countryInfoJSON?formatted=true&country=' . $searchResult['results'][0]['countryCode'] . '&username=' . $_REQUEST['username'] . '&style=full';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -52,7 +53,7 @@
 
 	//Getting info from openWeather API
 
-	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $searchResult['results'][0]['geometry']['lat'] . '&lon=' . $searchResult['results'][0]['geometry']['lng'] . '&units=metric&exclude=hourly,minutely&appid=23c61634b6fd3e68fc3c5cbde0ff8c7c';
+	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $searchResult['results'][0]['geometry']['lat'] . '&lon=' . $searchResult['results'][0]['geometry']['lng'] . '&units=metric&exclude=hourly,minutely&appid=' . $_REQUEST['open_weather_key'];
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -71,7 +72,7 @@
 
 	// Getting info from openExchangeRates API
 
-	$url='https://openexchangerates.org/api/latest.json?app_id=2ebca78af62d417688a07bcc8e5c9962';
+	$url='https://openexchangerates.org/api/latest.json?app_id=' . $_REQUEST['open_exchange_key'];
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
