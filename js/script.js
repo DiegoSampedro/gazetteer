@@ -32,8 +32,8 @@ if (navigator.geolocation) {
                     corner2 = L.latLng(result['geonames'][0]['south'], result['geonames'][0]['east']),
                     bounds = L.latLngBounds(corner1, corner2);
 
-                var latit = result['results'][0]['geometry']['lat'];
-                var longit = result['results'][0]['geometry']['lng'];
+               // var latit = result['results'][0]['geometry']['lat'];
+               // var longit = result['results'][0]['geometry']['lng'];
                 mymap = L.map('mapid').fitBounds(bounds, {padding: [50, 50]});
                 myIcon = L.icon({
                     iconUrl: './images/map-marker.png',
@@ -44,14 +44,29 @@ if (navigator.geolocation) {
                 marker = L.marker([latit, longit], {icon: myIcon}).addTo(mymap);
                 popupLocation = new L.LatLng(latit, longit);
       
-                popupContent= 'You are in ' + result['results'][0]['country'];
+                popupContent= 'You are in ' + result['geonames'][0]['countryName'];
                 popup = new L.Popup();
                 popup.setLatLng(popupLocation);
                 popup.setContent(popupContent);
 
                 marker.bindPopup(popup);
-
                 marker.openPopup();
+
+                var myLines = [{
+                    "type": result['borders'][0]['geometry']['type'],
+                    "coordinates": result['borders'][0]['geometry']['coordinates'] 
+                }];
+                
+                var myStyle = {
+                    "color": "#ff7800",
+                    "weight": 5,
+                    "opacity": 0.65
+                };
+                
+                var geojson = L.geoJSON(myLines, {
+                    style: myStyle
+                }).addTo(mymap);
+
 
                 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -62,7 +77,7 @@ if (navigator.geolocation) {
                     accessToken: 'pk.eyJ1IjoiZGllZ29zYW1wZWRybyIsImEiOiJja2VsZHcyMXgwbG1oMnJud2R2bTg4b2MwIn0.D6B-FvY03F2vrMHY59DSEw'
                     }).addTo(mymap);
 
-                $('#country2').html(result['results'][0]['country']);
+                $('#country2').html(result['geonames'][0]['countryName']);
                 $('#continent').html(result['geonames'][0]['continentName']);
                 $('#capital').html(result['geonames'][0]['capital']);
                 $('#population').html(result['geonames'][0]['population']);
@@ -128,7 +143,23 @@ if (navigator.geolocation) {
                     marker.bindPopup(popup);
                     marker.openPopup();
 
-                    $('#country2').html(result['results'][0]['country']);
+                    myLines = [{
+                        "type": result['borders'][0]['geometry']['type'],
+                        "coordinates": result['borders'][0]['geometry']['coordinates'] 
+                    }];
+                    
+                    myStyle = {
+                        "color": "#ff7800",
+                        "weight": 5,
+                        "opacity": 0.65
+                    };
+                    
+                    geojson = L.geoJSON(myLines, {
+                        style: myStyle
+                    }).addTo(mymap);
+
+
+                    $('#country2').html(result['geonames'][0]['countryName']);
                     $('#continent').html(result['geonames'][0]['continentName']);
                     $('#capital').html(result['geonames'][0]['capital']);
                     $('#population').html(result['geonames'][0]['population']);
@@ -169,8 +200,14 @@ $(".closebtn").click(function() {
 });
 
   $(".openbtn").click(function() {
+    var width = $(window).width();
+    if(width >= 450) { 
     document.getElementById("mySidebar").style.width = "450px";
+    } else {
+        document.getElementById("mySidebar").style.width = "100%";
+    }
     document.getElementById("main").style.display = "none";
 });
+
 
 });
