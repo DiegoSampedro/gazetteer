@@ -91,18 +91,19 @@
 
 	// Adding border coordinates
 
-	//$geoJson = file_get_contents("./countries_small.geo.json");
-	$geoJson = file_get_contents("./countries.geojson");
+	$geoJson = file_get_contents("./countries_small.geo.json");
+	//$geoJson = file_get_contents("./countries.geojson");
     
 	$geojsonArray['borders'] = json_decode($geoJson, true);
-	//array_push($searchResult, $geojsonArray);
+	//array_push($searchResult, $geojsonArray['borders']);
 	$tempo = [];
 	$searchResult['borders'] = [];
 
 		for($x = 0; $x < 180; $x++) {
-			//if($geojsonArray['borders']['features'][$x]['id'] == $searchResult['geonames'][0]['isoAlpha3']) {
-				if($geojsonArray['borders']['features'][$x]['properties']['ISO_A3'] == $searchResult['geonames'][0]['isoAlpha3']) {
-			    $tempo = $geojsonArray['borders']['features'][$x];
+			if($geojsonArray['borders']['features'][$x]['id'] == $searchResult['geonames'][0]['isoAlpha3']) {
+				//if($geojsonArray['borders']['features'][$x]['properties']['ISO_A3'] == $searchResult['geonames'][0]['isoAlpha3']) {
+				//$tempo = $geojsonArray['borders']['features'][$x];
+				$tempo = $geojsonArray['borders']['features'][$x];
 				array_push($searchResult['borders'], $tempo);
 		    }
 		}

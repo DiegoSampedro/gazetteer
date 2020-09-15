@@ -99,7 +99,7 @@
 	$tempo = [];
 	$searchResult['borders'] = [];
 
-		for($x = 0; $x < 180; $x++) {
+		for($x = 0; $x < 255; $x++) {
 			//if($geojsonArray['borders']['features'][$x]['id'] == $searchResult['geonames'][0]['isoAlpha3']) {
 				if($geojsonArray['borders']['features'][$x]['properties']['ISO_A3'] == $searchResult['geonames'][0]['isoAlpha3']) {
 			    $tempo = $geojsonArray['borders']['features'][$x];
